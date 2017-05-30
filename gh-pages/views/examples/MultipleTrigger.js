@@ -19,12 +19,11 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
         results.push(data[i])
       }
     }
-    if (results.length === 0) {
-      results.push({ id: query, display: query })
-    }
+    // if (query) {
+    //   results.push({ id: query, display: query, isNew: true })
+    // }
     return results
   }
-  console.log(value);
   return (
     <div className="multiple-triggers">
       <MentionsInput
@@ -33,19 +32,18 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
         style={ defaultStyle }
         allowSpaceInQuery
         markup="[{__display__}{__type__:__id__}]"
-        displayTransform={ (id, display) => `${display} (${id})` }
-        placeholder={"Mention people using '@'"}
+        displayTransform={ (id, display, type) => `(${type === 'tag' ? '#' : '@'}${display})` }
       >
         <Mention
           trigger="@"
           type="mention"
           appendSpaceOnAdd
           data={ queryFn }
-          renderSuggestion={ (entry, search, highlightedDisplay) => {
-            return (<div className="user">
-              {highlightedDisplay} {entry.display === entry.id ? '' : `(${entry.id})`}
+          renderSuggestion={ (entry, search, highlightedDisplay) => (
+            <div className="user">
+              { entry && entry.isNew ? 'Create New:' : ''} {highlightedDisplay}
             </div>)
-          }}
+          }
           onAdd={ onAdd }
           style={defaultMentionStyle}
         />
@@ -54,9 +52,9 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
           type="tag"
           appendSpaceOnAdd
           data={ queryFn }
-          renderSuggestion={ (suggestion, search, highlightedDisplay) => (
+          renderSuggestion={ (entry, search, highlightedDisplay) => (
             <div className="user">
-              { highlightedDisplay }
+              { entry && entry.isNew ? 'Create New:' : ''} {highlightedDisplay}
             </div>
           )}
           onAdd={ onAdd }
@@ -70,6 +68,6 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
     </div>
   )
 }
-const asExample = provideExampleValue('Worked on [{A Fun-Little Task in JIRA}{tag:ZEIT-11}] with [{#toggltag}{mention:#toggltag}] for some time!')
+const asExample = provideExampleValue('Worked on [{A Fun-Little Task in JIRA}{tag:ZEIT-11}] with [{toggltag}{mention:toggltag}] for some time!')
 
 export default asExample(MultipleTriggers)
