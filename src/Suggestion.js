@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { defaultStyle } from 'substyle';
-import omit from 'lodash/omit';
-import keys from 'lodash/keys';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { defaultStyle } from 'substyle'
+import omit from 'lodash/omit'
+import keys from 'lodash/keys'
 
 class Suggestion extends Component {
 
@@ -15,7 +15,7 @@ class Suggestion extends Component {
       PropTypes.string,
       PropTypes.shape({
         id: PropTypes.string.isRequired,
-        display: PropTypes.string
+        display: PropTypes.string,
       }),
     ]).isRequired,
     descriptor: PropTypes.object.isRequired,
@@ -24,7 +24,7 @@ class Suggestion extends Component {
   };
 
   render() {
-    let rest = omit(this.props, 'style', keys(Suggestion.propTypes));
+    const rest = omit(this.props, 'style', keys(Suggestion.propTypes))
 
     return (
       <li
@@ -34,62 +34,62 @@ class Suggestion extends Component {
 
         { this.renderContent() }
       </li>
-    );
+    )
   }
 
   renderContent() {
-    let { id, query, descriptor, suggestion, index } = this.props;
+    const { id, query, descriptor, suggestion, index } = this.props
 
-    let display = this.getDisplay();
-    let highlightedDisplay = this.renderHighlightedDisplay(display, query);
+    const display = this.getDisplay()
+    const highlightedDisplay = this.renderHighlightedDisplay(display, query)
 
-    if(descriptor.props.renderSuggestion) {
-      return descriptor.props.renderSuggestion(suggestion, query, highlightedDisplay, index);
+    if (descriptor.props.renderSuggestion) {
+      return descriptor.props.renderSuggestion(suggestion, query, highlightedDisplay, index)
     }
 
-    return highlightedDisplay;
+    return highlightedDisplay
   }
 
   getDisplay() {
-    let { suggestion } = this.props;
+    const { suggestion } = this.props
 
-    if(suggestion instanceof String) {
-      return suggestion;
+    if (suggestion instanceof String) {
+      return suggestion
     }
 
-    let { id, display } = suggestion;
+    const { id, display } = suggestion
 
-    if(!id || !display) {
-      return id;
+    if (!id || !display) {
+      return id
     }
 
-    return display;
+    return display
   }
 
   renderHighlightedDisplay(display) {
-    const { query, style } = this.props;
+    const { query, style } = this.props
 
-    let i = display.toLowerCase().indexOf(query.toLowerCase());
+    const i = display.toLowerCase().indexOf(query.toLowerCase())
 
-    if(i === -1) {
-      return <span { ...style("display") }>{ display }</span>;
+    if (i === -1) {
+      return <span { ...style('display') }>{ display }</span>
     }
 
     return (
-      <span { ...style("display") }>
+      <span { ...style('display') }>
         { display.substring(0, i) }
-        <b { ...style("highlight") }>
-          { display.substring(i, i+query.length) }
+        <b { ...style('highlight') }>
+          { display.substring(i, i + query.length) }
         </b>
-        { display.substring(i+query.length) }
+        { display.substring(i + query.length) }
       </span>
-    );
+    )
   }
 
 }
 
 const styled = defaultStyle({
-  cursor: "pointer"
-}, (props) => ({ "&focused": props.focused }))
+  cursor: 'pointer',
+}, (props) => ({ '&focused': props.focused }))
 
-export default styled(Suggestion);
+export default styled(Suggestion)

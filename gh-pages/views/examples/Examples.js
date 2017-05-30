@@ -1,60 +1,44 @@
 import React from 'react'
-import { EnhancerProvider } from 'substyle'
-import Radium from 'radium'
 
 import MultipleTrigger from './MultipleTrigger'
-import SingleLine from './SingleLine'
-import Advanced from './Advanced'
 
-const users = [
+const tasks = [
   {
-    id: 'walter',
-    display: 'Walter White',
+    id: 'ZEIT-11',
+    display: 'A Fun-Little Task in JIRA',
   },
   {
-    id: 'jesse',
-    display: 'Jesse Pinkman',
+    id: 'ZEIT-135',
+    display: 'weird name with $some @awkward #things .in ,it',
   },
   {
-    id: 'gus',
-    display: 'Gustavo "Gus" Fring',
+    id: 'ZEIT-111',
+    display: 'bla',
   },
   {
-    id: 'saul',
-    display: 'Saul Goodman',
+    id: '#toggltag',
+    display: '#toggltag',
   },
   {
-    id: 'hank',
-    display: 'Hank Schrader',
+    id: '#toggl tag',
+    display: '#toggl tag',
   },
   {
-    id: 'skyler',
-    display: 'Skyler White',
+    id: '58ff1792db705d4aea212d75',
+    display: 'Some Card Name',
   },
   {
-    id: 'mike',
-    display: 'Mike Ehrmantraut',
+    id: '#somezeitag',
+    display: '#somezeitag',
+  },
+  {
+    id: '#otherzeitag',
+    display: '#otherzeitag',
   },
 ]
 
 export default function Examples() {
   return (
-    <EnhancerProvider enhancer={Radium}>
-      <div className="examples">
-        <div className="row">
-          <div className="col-lg-12">
-            <MultipleTrigger data={ users } />
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-6">
-            <SingleLine data={ users } />
-          </div>
-          <div className="col-md-6">
-            <Advanced data={ users } />
-          </div>
-        </div>
-      </div>
-    </EnhancerProvider>
+    <MultipleTrigger data={ tasks } />
   )
 }

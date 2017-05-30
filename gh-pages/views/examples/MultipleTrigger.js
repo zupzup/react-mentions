@@ -6,28 +6,38 @@ import { provideExampleValue } from './higher-order'
 
 import defaultStyle from './defaultStyle'
 import defaultMentionStyle from './defaultMentionStyle'
+import fuzzysearch from 'fuzzysearch';
 
-// use first/outer capture group to extract the full entered sequence to be replaced
-// and second/inner capture group to extract search string from the match
-const emailRegex = /(([^\s@]+@[^\s@]+\.[^\s@]+))$/
+
 
 function MultipleTriggers({ value, data, onChange, onAdd }) {
+  function queryFn(query, callback) {
+    const results = []
+    for (let i = 0, l = data.length; i < l; ++i) {
+      const display = data[i].display || data[i].id
+      if (fuzzysearch(query.toLowerCase(), display.toLowerCase())) {
+        results.push(data[i])
+      }
+    }
+    return results
+  }
+  console.log(value);
   return (
     <div className="multiple-triggers">
-      <h3>Multiple trigger patterns</h3>
-      <p>Mention people using '@' + username or type an email address</p>
-
       <MentionsInput
         value={ value }
         onChange={ onChange }
         style={ defaultStyle }
-        markup="@[__display__](__type__:__id__)"
+        allowSpaceInQuery
+        markup="[{__display__}{__type__:__id__}]"
+        displayTransform={ (id, display) => `${display} (${id})` }
         placeholder={"Mention people using '@'"}
       >
         <Mention
-          type="user"
           trigger="@"
-          data={ data }
+          type="mention"
+          appendSpaceOnAdd
+          data={ queryFn }
           renderSuggestion={ (suggestion, search, highlightedDisplay) => (
             <div className="user">
               { highlightedDisplay }
@@ -36,21 +46,27 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
           onAdd={ onAdd }
           style={defaultMentionStyle}
         />
-
         <Mention
-          type="email"
-          trigger={emailRegex}
-          data={ (search) => [
-            { id: search, display: search },
-          ]}
+          trigger="#"
+          type="tag"
+          appendSpaceOnAdd
+          data={ queryFn }
+          renderSuggestion={ (suggestion, search, highlightedDisplay) => (
+            <div className="user">
+              { highlightedDisplay }
+            </div>
+          )}
           onAdd={ onAdd }
           style={{ backgroundColor: '#d1c4e9' }}
         />
       </MentionsInput>
+      <div>
+        <h3>Plain Text of Note Field:</h3>
+        {value}
+      </div>
     </div>
   )
 }
-
-const asExample = provideExampleValue('Hi @[John Doe](user:johndoe), \n\nlet\'s add @[joe@smoe.com](email:joe@smoe.com) and @[John Doe](user:johndoe) to this conversation... ')
+const asExample = provideExampleValue('Worked on [{A Fun-Little Task in JIRA}{tag:ZEIT-11}] with [{#toggltag}{mention:#toggltag}] for some time!')
 
 export default asExample(MultipleTriggers)
