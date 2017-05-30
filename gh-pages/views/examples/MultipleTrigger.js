@@ -19,6 +19,9 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
         results.push(data[i])
       }
     }
+    if (results.length === 0) {
+      results.push({ id: query, display: query })
+    }
     return results
   }
   console.log(value);
@@ -38,11 +41,11 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
           type="mention"
           appendSpaceOnAdd
           data={ queryFn }
-          renderSuggestion={ (suggestion, search, highlightedDisplay) => (
-            <div className="user">
-              { highlightedDisplay }
-            </div>
-          )}
+          renderSuggestion={ (entry, search, highlightedDisplay) => {
+            return (<div className="user">
+              {highlightedDisplay} {entry.display === entry.id ? '' : `(${entry.id})`}
+            </div>)
+          }}
           onAdd={ onAdd }
           style={defaultMentionStyle}
         />

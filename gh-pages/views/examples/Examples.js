@@ -16,24 +16,24 @@ const tasks = [
     display: 'bla',
   },
   {
-    id: '#toggltag',
-    display: '#toggltag',
+    id: 'toggltag',
+    display: 'toggltag',
   },
   {
-    id: '#toggl tag',
-    display: '#toggl tag',
+    id: 'toggl tag',
+    display: 'toggl tag',
   },
   {
     id: '58ff1792db705d4aea212d75',
     display: 'Some Card Name',
   },
   {
-    id: '#somezeitag',
-    display: '#somezeitag',
+    id: 'somezeitag',
+    display: 'somezeitag',
   },
   {
-    id: '#otherzeitag',
-    display: '#otherzeitag',
+    id: 'otherzeitag',
+    display: 'otherzeitag',
   },
 ]
 
