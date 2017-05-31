@@ -15,13 +15,17 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
     const results = []
     for (let i = 0, l = data.length; i < l; ++i) {
       const display = data[i].display || data[i].id
+      const current = {
+        id: data[i].id.replace('@', '').replace('#', ''),
+        display: data[i].display ? data[i].display.replace('@', '').replace('#', '') : data[i].display,
+      }
       if (fuzzysearch(query.toLowerCase(), display.toLowerCase())) {
-        results.push(data[i])
+        results.push(current)
       }
     }
-    // if (query) {
-    //   results.push({ id: query, display: query, isNew: true })
-    // }
+    if (query) {
+      results.push({ id: query, display: query, isNew: true })
+    }
     return results
   }
   return (
@@ -32,7 +36,6 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
         style={ defaultStyle }
         allowSpaceInQuery
         markup="[{__display__}{__type__:__id__}]"
-        displayTransform={ (id, display, type) => `(${type === 'tag' ? '#' : '@'}${display})` }
       >
         <Mention
           trigger="@"
@@ -58,7 +61,7 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
             </div>
           )}
           onAdd={ onAdd }
-          style={{ backgroundColor: '#d1c4e9' }}
+          style={defaultMentionStyle}
         />
       </MentionsInput>
       <div>
