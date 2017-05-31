@@ -24,7 +24,7 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
       }
     }
     if (query) {
-      results.push({ id: query, display: query, isNew: true })
+      results.push({ id: `*:${query}`, display: query, isNew: true })
     }
     return results
   }
