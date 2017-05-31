@@ -71,6 +71,6 @@ function MultipleTriggers({ value, data, onChange, onAdd }) {
     </div>
   )
 }
-const asExample = provideExampleValue('Worked on [{A Fun-Little Task in JIRA}{tag:ZEIT-11}] with [{toggltag}{mention:toggltag}] for some time!')
+const asExample = provideExampleValue('Worked on [{A Fun-Little Task in JIRA}{tag:jira:ZEIT-11}] with [{toggltag}{mention:toggl:toggltag}] for some time!')
 
 export default asExample(MultipleTriggers)

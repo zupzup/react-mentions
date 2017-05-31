@@ -4,35 +4,35 @@ import MultipleTrigger from './MultipleTrigger'
 
 const tasks = [
   {
-    id: 'ZEIT-11',
+    id: 'jira:ZEIT-11',
     display: 'A Fun-Little Task in JIRA',
   },
   {
-    id: 'ZEIT-135',
+    id: 'jira:ZEIT-135',
     display: 'weird name with $some @awkward #things .in ,it',
   },
   {
-    id: 'ZEIT-111',
+    id: 'jira:ZEIT-111',
     display: 'bla',
   },
   {
-    id: 'toggltag',
+    id: 'toggl:toggltag',
     display: 'toggltag',
   },
   {
-    id: 'toggl tag',
+    id: 'toggl:toggl tag',
     display: 'toggl tag',
   },
   {
-    id: '58ff1792db705d4aea212d75',
+    id: 'trello:58ff1792db705d4aea212d75',
     display: 'Some Card Name',
   },
   {
-    id: 'somezeitag',
+    id: '*:somezeitag',
     display: 'somezeitag',
   },
   {
-    id: 'otherzeitag',
+    id: '*:otherzeitag',
     display: 'otherzeitag',
   },
 ]
